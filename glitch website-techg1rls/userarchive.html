@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>US3R ARCH1VE</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      font-family: 'Press Start 2P', monospace;
+      color: white;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    canvas.binary-rain {
+      position: fixed;
+      top: 0;
+      width: 100px;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .left-rain {
+      left: 0;
+    }
+
+    .right-rain {
+      right: 0;
+    }
+
+    .user-list {
+      position: relative;
+      z-index: 1;
+      padding: 50px 100px;
+    }
+
+    .user-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 40px;
+      background: rgba(0, 0, 0, 25);
+      padding: 20px;
+      border: 3px solid #9b00ff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #9b00ff;
+    }
+
+    .user-row img {
+      width: 80px;
+      height: 80px;
+      margin-right: 20px;
+    }
+
+    h3 {
+      color: #ff00ff;
+    }
+
+    p {
+      font-size: 0.9em;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="marquee">
+    <span> US3R 4RC1V3 • US3R 4RC1V3 • US3R 4RC1V3 • US3R 4RC1V3 • US3R 4RC1V3 • US3R 4RC1V3 </span>
+  </div>
+
+  <header class="mb-4">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="manifesto.html">Manifesto</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+<div class="background-overlay"></div>
+  <!-- Matrix Binary Rain Canvases -->
+  <canvas id="left-rain" class="binary-rain left-rain"></canvas>
+  <canvas id="right-rain" class="binary-rain right-rain"></canvas>
+
+  <section class="user-list">
+    <div class="user-row">
+      <img src="images/user1.png" alt="User 1">
+      <div>
+        <h3>@gl1tchgrl</h3>
+        <p>Cyber archaeologist and artifact archivist.</p>
+      </div>
+    </div>
+    <div class="user-row">
+      <img src="images/user2.png" alt="User 2">
+      <div>
+        <h3>@ghostcore</h3>
+        <p>Explorer of defunct social ruins and networks.</p>
+      </div>
+    </div>
+    <div class="user-row">
+      <img src="images/user3.png" alt="User 3">
+      <div>
+        <h3>@netspook</h3>
+        <p>Collector of haunted code and spectral glitches.</p>
+      </div>
+    </div>
+    <div class="user-row">
+      <img src="images/user4.png" alt="User 4">
+      <div>
+        <h3>@bitwitch</h3>
+        <p>Digital mystic weaving memory into archives.</p>
+      </div>
+    </div>
+    <div class="user-row">
+      <img src="images/user6.png" alt="User 5">
+      <div>
+        <h3>@404siren</h3>
+        <p>Signals lost and found in abandoned domains.</p>
+      </div>
+    </div>
+    <div class="user-row">
+      <img src="images/user7.png" alt="User 6">
+      <div>
+        <h3>@neonshard</h3>
+        <p>Fragments of futures past — restored and remixed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript Binary Rain -->
+  <script>
+    function startBinaryRain(canvasId) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext("2d");
+
+      canvas.height = window.innerHeight;
+      canvas.width = 100;
+
+      const letters = "01";
+      const fontSize = 14;
+      const columns = canvas.width / fontSize;
+
+      const drops = Array(Math.floor(columns)).fill(1);
+
+      function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#FF00FF";
+        ctx.font = fontSize + "px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+          const text = letters[Math.floor(Math.random() * letters.length)];
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+          if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+
+          drops[i]++;
+        }
+      }
+
+      setInterval(draw, 50);
+    }
+
+    startBinaryRain("left-rain");
+    startBinaryRain("right-rain");
+  </script>
+
+</body>
+</html>

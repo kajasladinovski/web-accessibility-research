@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@gl1tchgrl | MAN1FEST0</title>
+
+  <!-- Fonts & CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="manifesto-page">
+    
+  <div class="marquee"><span>GL1TCHGRL MAN1FEST0 ✶ GL1TCHGRL MAN1FEST0 ✶</span></div>
+  <header class="mb-4">
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="userarchive.html">Manifesto</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="manifesto-container">
+    <!-- Sidebar: Profile Info -->
+    <div class="sidebar">
+      <header class="profile-header">
+        <img src="images/user3.png" alt="@gl1tchgrl" class="profile-pic" />
+        <h1>@gl1tchgrl</h1>
+        <p>Cyber archaeologist and artifact archivist.</p>
+      </header>
+    
+      <div class="media-player draggable" id="videoPlayer">
+        <div class="player-title-bar" id="videoPlayerHeader">
+          <span>Video Player</span>
+          <span class="window-buttons">_ ▢ ✖</span>
+        </div>
+        <div class="player-screen">
+          <input type="file" id="videoUpload" accept="video/*" class="video-file-input" />
+          <video id="videoPreview" width="230" height="130" controls style="display:none; margin-top: 10px; background: #000; border: 2px solid #ff66cc;"></video>
+          <button id="videoPlayPauseBtn" disabled class="visualizer-btn">▶ Play</button>
+        </div>
+      </div>
+      <div class="media-player draggable" id="musicVisualizer">
+        <div class="player-title-bar" id="musicVisualizerHeader">
+          <span>Music Visualizer</span>
+          <span class="window-buttons">_ ▢ ✖</span>
+        </div>
+        <div class="player-screen">
+          <input type="file" id="musicUpload" accept="audio/*" class="music-file-input" />
+          <div id="waveform" style="width: 100%; height: 80px; margin-top: 10px;"></div>
+          <button id="playPauseBtn" disabled class="visualizer-btn">▶ Play</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="manifesto-main">
+      <!-- Toggle Button -->
+      <div class="toggle-view">
+        <button id="toggleViewBtn">Show Saved Posts</button>
+      </div>
+
+      <!-- Saved Posts View -->
+      <div id="savedPostsView" style="display: none;">
+        <section class="saved-posts">
+          <h2>Saved Posts</h2>
+          <div class="gallery-grid" id="savedPostsGrid"></div>
+        </section>
+      </div>
+
+      <!-- Normal Posts -->
+      <div id="normalPosts">
+        <!-- Create New Post -->
+        <section class="create-post">
+          <h2>Create New Post</h2>
+          <textarea placeholder="Write your thoughts..." rows="4"></textarea>
+          <div class="file-inputs">
+            <label>Attach Image: <input type="file" accept="image/*"></label>
+            <label>Attach Music: <input type="file" accept="audio/*"></label>
+          </div>
+          <button class="post-button">Post</button>
+        </section>
+
+        <!-- Text Posts -->
+        <section class="text-posts">
+          <h2>Text Entries</h2>
+
+          <div class="text-post post">
+            <p>"What is lost on the surface always leaks in the code beneath."</p>
+            <button class="like-button">♥ Like (<span class="like-count">12</span>)</button>
+            <div class="comments">
+              <p><strong>@ghostcore:</strong> this line goes hard</p>
+            </div>
+            <input type="text" placeholder="Leave a comment..." class="comment-input" />
+          </div>
+
+          <div class="text-post post">
+            <p>"Glitches are just history trying to repeat itself."</p>
+            <button class="like-button">♥ Like (<span class="like-count">8</span>)</button>
+            <div class="comments">
+              <p><strong>@gl1tchgrl:</strong> favorite quote</p>
+            </div>
+            <input type="text" placeholder="Leave a comment..." class="comment-input" />
+          </div>
+        </section>
+
+        <!-- Image Posts -->
+        <section class="user-posts">
+          <h2>My Posts</h2>
+
+          <div class="post image-post">
+            <img src="images/archive1.jpg" alt="Post 1" />
+            <p>Bag tour - captured 2047.</p>
+            <button class="like-button">♥ Like (<span class="like-count">23</span>)</button>
+            <input type="text" placeholder="Leave a comment..." class="comment-input" />
+          </div>
+
+          <div class="post image-post">
+            <img src="images/archive2.jpg" alt="Post 2" />
+            <p>404 relics from forgotten boards.</p>
+            <button class="like-button">♥ Like (<span class="like-count">15</span>)</button>
+            <input type="text" placeholder="Leave a comment..." class="comment-input" />
+          </div>
+
+          <div class="post image-post">
+            <img src="images/archive3.jpg" alt="Post 3" />
+            <p>Shadowlog scan, 2038.</p>
+            <button class="like-button">♥ Like (<span class="like-count">18</span>)</button>
+            <input type="text" placeholder="Leave a comment..." class="comment-input" />
+          </div>
+        </section>
+
+        <h2 class="blinking">SYSTEM BREACH // USER EGO DETECTED</h2>
+      </div>
+    </main>
+  </div>
+
+  <!-- Floating glitch blobs -->
+  <div class="float-blob" style="top:10%; left:15%;"></div>
+
+  <footer>
+    <p>© 2025 TECHG1RL</p>
+  </footer>
+
+  <!-- JavaScript for Interactions -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedSet = new Set();
+      const toggleBtn = document.getElementById('toggleViewBtn');
+      const normalView = document.getElementById('normalPosts');
+      const savedView = document.getElementById('savedPostsView');
+      const savedPostsGrid = document.getElementById('savedPostsGrid');
+// Existing code above...
+
+// === New WaveSurfer visualizer logic ===
+const musicInput = document.getElementById("musicUpload");
+const playPauseBtn = document.getElementById("playPauseBtn");
+let wavesurfer = null;
+
+musicInput.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  if (wavesurfer) {
+    wavesurfer.destroy();
+  }
+
+  wavesurfer = WaveSurfer.create({
+    container: "#waveform",
+    waveColor: "#00ffcc",
+    progressColor: "#ff66cc",
+    height: 80,
+    barWidth: 2,
+    cursorColor: "#ffffff",
+    backgroundColor: "#1a1a1a",
+    responsive: true,
+  });
+
+  const objectUrl = URL.createObjectURL(file);
+  wavesurfer.load(objectUrl);
+
+  playPauseBtn.disabled = false;
+  playPauseBtn.textContent = "▶ Play";
+
+  playPauseBtn.onclick = () => {
+    wavesurfer.playPause();
+    playPauseBtn.textContent = wavesurfer.isPlaying() ? "❚❚ Pause" : "▶ Play";
+  };
+});
+      // Toggle view
+      toggleBtn.addEventListener('click', () => {
+        const showingSaved = savedView.style.display === 'block';
+        savedView.style.display = showingSaved ? 'none' : 'block';
+        normalView.style.display = showingSaved ? 'block' : 'none';
+        toggleBtn.textContent = showingSaved ? 'Show Saved Posts' : 'Show All Posts';
+        if (!showingSaved) updateSavedPostsView();
+      });
+
+      function updateSavedPostsView() {
+        savedPostsGrid.innerHTML = '';
+        savedSet.forEach(src => {
+          const img = document.createElement('img');
+          img.src = src;
+          savedPostsGrid.appendChild(img);
+        });
+      }
+
+      // Like buttons
+      document.querySelectorAll(".like-button").forEach(button => {
+        button.addEventListener("click", () => {
+          const countSpan = button.querySelector(".like-count");
+          let count = parseInt(countSpan.textContent);
+          const liked = button.classList.toggle("liked");
+          countSpan.textContent = liked ? count + 1 : Math.max(count - 1, 0);
+          button.innerHTML = `${liked ? '♥' : '♡'} Like (<span class="like-count">${countSpan.textContent}</span>)`;
+        });
+      });
+
+      // Comment inputs
+      document.querySelectorAll(".comment-input").forEach(input => {
+        input.addEventListener("keypress", e => {
+          if (e.key === "Enter" && input.value.trim()) {
+            const newComment = document.createElement("p");
+            newComment.innerHTML = `<strong>@you:</strong> ${input.value.trim()}`;
+            input.previousElementSibling.appendChild(newComment);
+            input.value = "";
+          }
+        });
+      });
+
+      // Save buttons
+      document.querySelectorAll(".image-post").forEach(post => {
+        const saveBtn = document.createElement("button");
+        saveBtn.textContent = "⧉ Save";
+        saveBtn.className = "save-button";
+        post.appendChild(saveBtn);
+
+        const postId = post.querySelector('img').src;
+
+        saveBtn.addEventListener("click", () => {
+          if (savedSet.has(postId)) {
+            savedSet.delete(postId);
+            saveBtn.textContent = "⧉ Save";
+          } else {
+            savedSet.add(postId);
+            saveBtn.textContent = "✓ Saved";
+          }
+        });
+      });
+
+      // Create new post
+      document.querySelector(".post-button").addEventListener("click", () => {
+        const textarea = document.querySelector(".create-post textarea");
+        const text = textarea.value.trim();
+        if (!text) return;
+
+        const newPost = document.createElement("div");
+        newPost.className = "text-post post";
+        newPost.innerHTML = `
+          <p>${text}</p>
+          <button class="like-button">♡ Like (<span class="like-count">0</span>)</button>
+          <div class="comments"></div>
+          <input type="text" placeholder="Leave a comment..." class="comment-input" />
+        `;
+
+        // Bind like & comment
+        newPost.querySelector(".like-button").addEventListener("click", function () {
+          const countSpan = this.querySelector(".like-count");
+          let count = parseInt(countSpan.textContent);
+          const liked = this.classList.toggle("liked");
+          countSpan.textContent = liked ? count + 1 : Math.max(count - 1, 0);
+          this.innerHTML = `${liked ? '♥' : '♡'} Like (<span class="like-count">${countSpan.textContent}</span>)`;
+        });
+
+        newPost.querySelector(".comment-input").addEventListener("keypress", e => {
+          if (e.key === "Enter" && e.target.value.trim()) {
+            const newComment = document.createElement("p");
+            newComment.innerHTML = `<strong>@you:</strong> ${e.target.value.trim()}`;
+            newPost.querySelector(".comments").appendChild(newComment);
+            e.target.value = "";
+          }
+        });
+
+        document.querySelector(".text-posts").prepend(newPost);
+        textarea.value = "";
+      });
+    });
+    
+  </script>
+</body>
+</html>
